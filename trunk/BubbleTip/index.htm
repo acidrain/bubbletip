@@ -1,0 +1,181 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+    <title>BubbleTip Demo</title>
+	
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js" type="text/javascript"></script>
+	
+	<script src="js/jQuery.bubbletip-1.0.1.js" type="text/javascript"></script>
+	<link href="js/bubbletip/bubbletip.css" rel="stylesheet" type="text/css" />
+	
+	<style type="text/css">
+		p, h4, li
+		{
+			font-family: Arial, Tahoma, Verdana;
+		}
+		pre.tip
+		{
+			margin: 0px;
+			padding: 5px;
+			font-size: 0.9em;	
+		}
+		pre.code
+		{
+			margin: 0px;
+			padding: 20px;
+			border: solid 1px #CCC;
+			font-size: 1.0em;
+		}
+	</style>
+	
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$('#a1_up').bubbletip('#tip1_up');
+			$('#a1_down').bubbletip('#tip1_down', {
+				deltaDirection: 'down',
+				deltaPosition: 50,
+				offsetTop: 20
+			});
+			$('#a1_left').bubbletip('#tip1_left', {
+				deltaDirection: 'left',
+				animationDuration: 100,
+				offsetLeft: -20
+			});
+			$('#a1_right').bubbletip('#tip1_right', { deltaDirection: 'right' });
+			$('#a1_trigger').bubbletip('#tip1_trigger1', { positionAtElement: $('#a1_target') });
+			$('#a1_trigger').bubbletip('#tip1_trigger2', {
+				positionAtElement: $('#a1_target'),
+				deltaDirection: 'down'
+			});
+		});
+	</script>
+</head>
+<body>
+	<h4>bubbletip</h4>
+	<p>A jQuery plugin to create a bubble-stylized tooltip popup</p>
+	
+	<h4>features</h4>
+	<ul>
+	<li>multiple tips on a page</li>
+	<li>multiple tips per jQuery element</li>
+	<li>tips open outward in four directions:
+		<ul>
+		<li>up</li>
+		<li>down</li>
+		<li>left</li>
+		<li>right</li>
+		</ul>
+	</li>
+	<li>tips can be: 
+		<ul>
+		<li>anchored to the triggering jQuery element</li>
+		<li>absolutely positioned</li>
+		<li>opened at the current mouse coordinates</li>
+		<li>anchored to a specified jQuery element</li>
+		</ul>
+	</li>
+	<li>IE png transparency is handled via filters</li>
+	</ul> 
+	
+<h4>examples</h4>
+<p>MOUSEOVER to open a tooltip 
+	<a id="a1_up" href="#">above</a>, 
+	<a id="a1_down" href="#">below</a>, 
+	<a id="a1_left" href="#">to the left</a> or 
+	<a id="a1_right" href="#">to the right</a> of any element.</p>
+<p>MOUSEOVER a 
+	<a id="a1_trigger" href="#">trigger element</a> to open a tooltip above and below a 
+	<a id="a1_target" href="#">target element</a>.</p>
+	
+<div id="tip1_up" style="display:none;"><pre class="tip">{ deltaDirection: 'up' }</pre></div>
+<div id="tip1_down" style="display:none;">
+<pre class="tip">{ 
+    deltaDirection: 'down', 
+    deltaPosition: 100,
+    offsetTop: 10 
+}</pre>
+</div>
+<div id="tip1_left" style="display:none;">
+<pre class="tip">{ 
+    deltaDirection: 'left', 
+    animationDuration: 100,
+    offsetLeft: -20 
+}</pre>
+</div>
+<div id="tip1_right" style="display:none;"><img src="bubble.jpg" width="128" height="128" /></div>
+<div id="tip1_trigger1" style="display:none;">
+<pre class="tip">{ 
+    deltaDirection: 'up', 
+    positionAtElement: $('#a1_target')
+}</pre>
+</div>
+<div id="tip1_trigger2" style="display:none;">
+<pre class="tip">{ 
+    deltaDirection: 'down', 
+    positionAtElement: $('#a1_target')
+}</pre>
+</div>
+
+<h4>The "trigger" markup:</h4>
+<pre class="code">&lt;h4&gt;examples&lt;/h4&gt;
+&lt;p&gt;MOUSEOVER to open a tooltip 
+	&lt;a id=&quot;a1_up&quot; href=&quot;#&quot;&gt;above&lt;/a&gt;, 
+	&lt;a id=&quot;a1_down&quot; href=&quot;#&quot;&gt;below&lt;/a&gt;, 
+	&lt;a id=&quot;a1_left&quot; href=&quot;#&quot;&gt;to the left&lt;/a&gt; or 
+	&lt;a id=&quot;a1_right&quot; href=&quot;#&quot;&gt;to the right&lt;/a&gt; of any element.&lt;/p&gt;
+&lt;p&gt;MOUSEOVER a 
+	&lt;a id=&quot;a1_trigger&quot; href=&quot;#&quot;&gt;trigger element&lt;/a&gt; to open a tooltip above and below a 
+	&lt;a id=&quot;a1_target&quot; href=&quot;#&quot;&gt;target element&lt;/a&gt;.&lt;/p&gt;</pre>
+<h4>The "tip" markup:</h4>
+<pre class="code">&lt;div id=&quot;tip1_up&quot; style=&quot;display:none;&quot;&gt;&lt;pre class=&quot;tip&quot;&gt;{ deltaDirection: 'up' }&lt;/pre&gt;&lt;/div&gt;
+&lt;div id=&quot;tip1_down&quot; style=&quot;display:none;&quot;&gt;
+&lt;pre class=&quot;tip&quot;&gt;{ 
+    deltaDirection: 'down', 
+    deltaPosition: 100,
+    offsetTop: 10 
+}&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&quot;tip1_left&quot; style=&quot;display:none;&quot;&gt;
+&lt;pre class=&quot;tip&quot;&gt;{ 
+    deltaDirection: 'left', 
+    animationDuration: 100,
+    offsetLeft: -20 
+}&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&quot;tip1_right&quot; style=&quot;display:none;&quot;&gt;&lt;img src=&quot;bubble.jpg&quot; width=&quot;128&quot; height=&quot;128&quot; /&gt;&lt;/div&gt;
+&lt;div id=&quot;tip1_trigger1&quot; style=&quot;display:none;&quot;&gt;
+&lt;pre class=&quot;tip&quot;&gt;{ 
+    deltaDirection: 'up', 
+    positionAtElement: $('#a1_target')
+}&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&quot;tip1_trigger2&quot; style=&quot;display:none;&quot;&gt;
+&lt;pre class=&quot;tip&quot;&gt;{ 
+    deltaDirection: 'down', 
+    positionAtElement: $('#a1_target')
+}&lt;/pre&gt;
+&lt;/div&gt;</pre>
+<h4>The script activation:</h4>
+<pre class="code">&lt;script type=&quot;text/javascript&quot;&gt;
+    $(document).ready(function() {
+        $('#a1_up').bubbletip('#tip1_up');
+        $('#a1_down').bubbletip('#tip1_down', {
+            deltaDirection: 'down',
+            deltaPosition: 50,
+            offsetTop: 20
+        });
+        $('#a1_left').bubbletip('#tip1_left', {
+            deltaDirection: 'left',
+            animationDuration: 100,
+            offsetLeft: -20
+        });
+        $('#a1_right').bubbletip('#tip1_right', { deltaDirection: 'right' });
+        $('#a1_trigger').bubbletip('#tip1_trigger1', { positionAtElement: $('#a1_target') });
+        $('#a1_trigger').bubbletip('#tip1_trigger2', {
+            positionAtElement: $('#a1_target'),
+            deltaDirection: 'down'
+        });
+    });
+&lt;/script&gt;</pre>
+</body>
+</html>
