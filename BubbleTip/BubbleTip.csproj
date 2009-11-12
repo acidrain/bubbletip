@@ -1,0 +1,87 @@
+﻿<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{95D3B404-4C92-466C-8026-A74801005543}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>BubbleTip</RootNamespace>
+    <AssemblyName>BubbleTip</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Content Include="bubble.jpg" />
+    <Content Include="index.htm" />
+    <Content Include="js\bubbletip\bubbletip-B-tail.png" />
+    <Content Include="js\bubbletip\bubbletip-B.png" />
+    <Content Include="js\bubbletip\bubbletip-BL-corner.png" />
+    <Content Include="js\bubbletip\bubbletip-BR-corner.png" />
+    <Content Include="js\bubbletip\bubbletip-L-R.png" />
+    <Content Include="js\bubbletip\bubbletip-L-tail.png" />
+    <Content Include="js\bubbletip\bubbletip-L.png" />
+    <Content Include="js\bubbletip\bubbletip-R-tail.png" />
+    <Content Include="js\bubbletip\bubbletip-R.png" />
+    <Content Include="js\bubbletip\bubbletip-T-B.png" />
+    <Content Include="js\bubbletip\bubbletip-T-tail.png" />
+    <Content Include="js\bubbletip\bubbletip-T.png" />
+    <Content Include="js\bubbletip\bubbletip-TL-corner.png" />
+    <Content Include="js\bubbletip\bubbletip-TR-corner.png" />
+    <Content Include="js\bubbletip\bubbletip.css" />
+    <Content Include="js\bubbletip\bubbletip.png" />
+    <Content Include="js\jQuery.bubbletip-1.0.1.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="js\bubbletip\bubbletip-1.0.1.psd" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v9.0\WebApplications\Microsoft.WebApplication.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>52101</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>
+          </IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>
