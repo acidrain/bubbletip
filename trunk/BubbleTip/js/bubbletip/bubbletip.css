@@ -10,66 +10,56 @@
 .bubbletip td.bt-topleft
 {
 	background: transparent url(bubbletip.png) no-repeat scroll 0px 0px;
-	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='bubbletip-TL-corner.png', sizingMethod='crop');
 	height: 33px;
 	width: 33px;
 }
 .bubbletip td.bt-top
 {
 	background: transparent url(bubbletip-T-B.png) repeat-x scroll 0px 0px;
-	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='bubbletip-T.png', sizingMethod='scale');
 	height: 33px;
 }
 .bubbletip td.bt-topright
 {
 	background: transparent url(bubbletip.png) no-repeat scroll -73px 0px;
-	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='bubbletip-TR-corner.png', sizingMethod='crop');
 	height: 33px;
 	width: 33px;
 }
 .bubbletip td.bt-left-tail div.bt-left, .bubbletip td.bt-left
 {
 	background: transparent url(bubbletip-L-R.png) repeat-y scroll 0px 0px;
-	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='bubbletip-L.png', sizingMethod='scale');
 	width: 33px;
 }
 .bubbletip td.bt-left-tail div.bt-left-tail
 {
 	background: transparent url(bubbletip.png) no-repeat scroll 0px -33px;
-	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='bubbletip-L-tail.png', sizingMethod='scale');
 	width: 33px;
 	height: 40px;
 }
 .bubbletip td.bt-right-tail div.bt-right, .bubbletip td.bt-right
 {
 	background: transparent url(bubbletip-L-R.png) repeat-y scroll -33px 0px;
-	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='bubbletip-R.png', sizingMethod='scale');
 	width: 33px;
 }
 .bubbletip td.bt-right-tail div.bt-right-tail
 {
 	background: transparent url(bubbletip.png) no-repeat scroll -73px -33px;
-	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='bubbletip-R-tail.png', sizingMethod='scale');
 	width: 33px;
 	height: 40px;
 }
 .bubbletip td.bt-bottomleft
 {
 	background: transparent url(bubbletip.png) no-repeat scroll 0px -73px;
-	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='bubbletip-BL-corner.png', sizingMethod='crop');
 	height: 33px;
 	width: 33px;
 }
 .bubbletip td.bt-bottom
 {
 	background: transparent url(bubbletip-T-B.png) repeat-x scroll 0px -33px;
-	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='bubbletip-B.png', sizingMethod='scale');
 	height: 33px;
 }
 .bubbletip td.bt-bottomright
 {
 	background: transparent url(bubbletip.png) no-repeat scroll -73px -73px;
-	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='bubbletip-BR-corner.png', sizingMethod='crop');
 	height: 33px;
 	width: 33px;
 }
@@ -81,25 +71,21 @@
 {
 	width: 50%;
 	background: transparent url(bubbletip-T-B.png) repeat-x scroll 0px 0px;
-	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='bubbletip-T.png', sizingMethod='scale');
 }
 .bubbletip table.bt-bottom th
 {
 	width: 50%;
 	background: transparent url(bubbletip-T-B.png) repeat-x scroll 0px -33px;
-	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='bubbletip-B.png', sizingMethod='scale');
 }
 .bubbletip table.bt-top td div
 {
 	background: transparent url(bubbletip.png) no-repeat scroll -33px 0px;
-	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='bubbletip-T-tail.png', sizingMethod='crop');
 	width: 40px;
 	height: 33px;
 }
 .bubbletip table.bt-bottom td div
 {
 	background: transparent url(bubbletip.png) no-repeat scroll -33px -73px;
-	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='bubbletip-B-tail.png', sizingMethod='crop');
 	width: 40px;
 	height: 33px;
 }
