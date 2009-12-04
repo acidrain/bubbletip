@@ -92,6 +92,7 @@
 .bubbletip td.bt-content
 {
 	background-color: #fff;
+	vertical-align: middle;
 }
 /*******************************/
 
