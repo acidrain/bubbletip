@@ -38,7 +38,9 @@
 				deltaDirection: 'up', // direction: up | down | left | right
 				mouseoutDelay: 500,
 				animationDuration: 250,
-				animationEasing: 'swing' // linear | swing
+				animationEasing: 'swing', // linear | swing
+				bindShow: 'mouseover', // mouseover | focus | click | etc.
+				bindHide: 'mouseout', // mouseout | blur | etc.
 			};
 			if (options) {
 				_options = $.extend(_options, options);
@@ -136,7 +138,7 @@
 			});
 
 			// handle mouseover and mouseout events
-			$([_wrapper.get(0), this.get(0)]).mouseover(function(e) {
+			$([_wrapper.get(0), this.get(0)]).bind(_options.bindShow, function(e) {
 				if (_timeoutAnimate) {
 					clearTimeout(_timeoutAnimate);
 				}
@@ -185,7 +187,7 @@
 				});
 
 				return false;
-			}).mouseout(function() {
+			}).bind(_options.bindHide, function() {
 				if (_timeoutAnimate) {
 					clearTimeout(_timeoutAnimate);
 				}
