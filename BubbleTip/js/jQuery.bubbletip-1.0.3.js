@@ -25,6 +25,13 @@
 	var bindIndex = 0;
 	$.fn.extend({
 		bubbletip: function(tip, options) {
+			// check to see if the tip is a descendant of 
+			// a table.bubbletip element and therefore
+			// has already been instantiated as a bubbletip
+			if ($('table.bubbletip #' + tip.id).length > 0) {
+				return this;
+			}
+
 			var _this, _tip, _options, _calc, _timeoutAnimate, _timeoutRefresh, _isActive, _isHiding, _wrapper, _bindIndex;
 
 			_this = $(this);
@@ -38,7 +45,9 @@
 				deltaDirection: 'up', // direction: up | down | left | right
 				mouseoutDelay: 500,
 				animationDuration: 250,
-				animationEasing: 'swing' // linear | swing
+				animationEasing: 'swing', // linear | swing
+				bindShow: 'mouseover', // mouseover | focus | click | etc.
+				bindHide: 'mouseout' // mouseout | blur | etc.
 			};
 			if (options) {
 				_options = $.extend(_options, options);
@@ -76,8 +85,28 @@
 			} else if (_options.deltaDirection.match(/^right$/i)) {
 				_wrapper = $('<table class="bubbletip" cellspacing="0" cellpadding="0"><tbody><tr><td class="bt-topleft"></td><td class="bt-top"></td><td class="bt-topright"></td></tr><tr><td class="bt-left-tail"><div class="bt-left"></div><div class="bt-left-tail"></div><div class="bt-left"></div></td><td class="bt-content"></td><td class="bt-right"></td></tr><tr><td class="bt-bottomleft"></td><td class="bt-bottom"></td><td class="bt-bottomright"></td></tr></tbody></table>');
 			}
+
 			// append the wrapper to the document body
 			_wrapper.appendTo('body');
+
+			// apply IE filters to _wrapper elements
+			if ((/msie/.test(navigator.userAgent.toLowerCase())) && (!/opera/.test(navigator.userAgent.toLowerCase()))) {
+				$('*', _wrapper).each(function() {
+					var image = $(this).css('background-image');
+					if (image.match(/^url\(["']?(.*\.png)["']?\)$/i)) {
+						image = RegExp.$1;
+						$(this).css({
+							'backgroundImage': 'none',
+							'filter': 'progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled=true, sizingMethod=' + ($(this).css('backgroundRepeat') == 'no-repeat' ? 'crop' : 'scale') + ', src=\'' + image + '\')'
+						}).each(function() {
+							var position = $(this).css('position');
+							if (position != 'absolute' && position != 'relative')
+								$(this).css('position', 'relative');
+						});
+					}
+				});
+			}
+
 			// move the tip element into the content section of the wrapper
 			$('.bt-content', _wrapper).append(_tip);
 			// show the tip (in case it is hidden) so that we can calculate its dimensions
@@ -99,6 +128,102 @@
 			}
 			// set the opacity of the wrapper to 0
 			_wrapper.css('opacity', 0);
+			// execute initial calculations
+			_Calculate();
+
+			// handle window.resize
+			$(window).bind('resize.bubbletip' + _bindIndex, function() {
+				if (_timeoutRefresh) {
+					clearTimeout(_timeoutRefresh);
+				} else {
+					_wrapper.hide();
+				}
+				_timeoutRefresh = setTimeout(function() {
+					_Calculate();
+				}, 250);
+			});
+
+			// handle mouseover and mouseout events
+			$([_wrapper.get(0), this.get(0)]).bind(_options.bindShow, function(e) {
+				if (_timeoutAnimate) {
+					clearTimeout(_timeoutAnimate);
+				}
+				if (_isActive) {
+					return;
+				}
+				_isActive = true;
+				if (_isHiding) {
+					_wrapper.stop(true, false);
+				}
+
+				var animation;
+
+				if (_options.positionAt.match(/^element|body$/i)) {
+					if (_options.deltaDirection.match(/^up|down$/i)) {
+						if (!_isHiding) {
+							_wrapper.css('top', parseInt(_calc.top + _calc.delta) + 'px');
+						}
+						animation = { 'opacity': 1, 'top': _calc.top + 'px' };
+					} else {
+						if (!_isHiding) {
+							_wrapper.css('left', parseInt(_calc.left + _calc.delta) + 'px');
+						}
+						animation = { 'opacity': 1, 'left': _calc.left + 'px' };
+					}
+				} else {
+					if (_options.deltaDirection.match(/^up|down$/i)) {
+						if (!_isHiding) {
+							_calc.mouseTop = e.pageY + _calc.top;
+							_wrapper.css({ 'top': parseInt(_calc.mouseTop + _calc.delta) + 'px', 'left': parseInt(e.pageX - (_wrapper.width() / 2)) + 'px' });
+						}
+						animation = { 'opacity': 1, 'top': _calc.mouseTop + 'px' };
+					} else {
+						if (!_isHiding) {
+							_calc.mouseLeft = e.pageX + _calc.left;
+							_wrapper.css({ 'left': parseInt(_calc.mouseLeft + _calc.delta) + 'px', 'top': parseInt(e.pageY - (_wrapper.height() / 2)) + 'px' });
+						}
+						animation = { 'opacity': 1, 'left': _calc.left + 'px' };
+					}
+				}
+				_isHiding = false;
+				_wrapper.show();
+				_wrapper.animate(animation, _options.animationDuration, _options.animationEasing, function() {
+					_wrapper.css('opacity', '');
+					_isActive = true;
+				});
+
+				return false;
+			}).bind(_options.bindHide, function() {
+				if (_timeoutAnimate) {
+					clearTimeout(_timeoutAnimate);
+				}
+				_timeoutAnimate = setTimeout(function() {
+					var animation;
+
+					_isActive = false;
+					_isHiding = true;
+					if (_options.positionAt.match(/^element|body$/i)) {
+						if (_options.deltaDirection.match(/^up|down$/i)) {
+							animation = { 'opacity': 0, 'top': parseInt(_calc.top - _calc.delta) + 'px' };
+						} else {
+							animation = { 'opacity': 0, 'left': parseInt(_calc.left - _calc.delta) + 'px' };
+						}
+					} else {
+						if (_options.deltaDirection.match(/^up|down$/i)) {
+							animation = { 'opacity': 0, 'top': parseInt(_calc.mouseTop - _calc.delta) + 'px' };
+						} else {
+							animation = { 'opacity': 0, 'left': parseInt(_calc.mouseLeft - _calc.delta) + 'px' };
+						}
+					}
+					_wrapper.animate(animation, _options.animationDuration, _options.animationEasing, function() {
+						_wrapper.hide();
+						_isHiding = false;
+					});
+
+				}, _options.mouseoutDelay);
+
+				return false;
+			});
 
 			function _Calculate() {
 				// calculate values
@@ -167,101 +292,6 @@
 					});
 				}
 			};
-			// execute initial calculations
-			_Calculate();
-			// handle window.resize
-			$(window).bind('resize.bubbletip' + _bindIndex, function() {
-				if (_timeoutRefresh) {
-					clearTimeout(_timeoutRefresh);
-				} else {
-					_wrapper.hide();
-				}
-				_timeoutRefresh = setTimeout(function() {
-					_Calculate();
-					_wrapper.show();
-				}, 250);
-			});
-
-			// handle mouseover and mouseout events
-			$([_wrapper.get(0), this.get(0)]).mouseover(function(e) {
-				if (_timeoutAnimate) {
-					clearTimeout(_timeoutAnimate);
-				}
-				if (_isActive) {
-					return;
-				}
-				_isActive = true;
-				if (_isHiding) {
-					_wrapper.stop(true, false);
-				}
-
-				var animation;
-
-				if (_options.positionAt.match(/^element|body$/i)) {
-					if (_options.deltaDirection.match(/^up|down$/i)) {
-						if (!_isHiding) {
-							_wrapper.css('top', parseInt(_calc.top + _calc.delta) + 'px');
-						}
-						animation = { 'opacity': 1, 'top': _calc.top + 'px' };
-					} else {
-						if (!_isHiding) {
-							_wrapper.css('left', parseInt(_calc.left + _calc.delta) + 'px');
-						}
-						animation = { 'opacity': 1, 'left': _calc.left + 'px' };
-					}
-				} else {
-					if (_options.deltaDirection.match(/^up|down$/i)) {
-						if (!_isHiding) {
-							_calc.mouseTop = e.pageY + _calc.top;
-							_wrapper.css({ 'top': parseInt(_calc.mouseTop + _calc.delta) + 'px', 'left': parseInt(e.pageX - (_wrapper.width() / 2)) + 'px' });
-						}
-						animation = { 'opacity': 1, 'top': _calc.mouseTop + 'px' };
-					} else {
-						if (!_isHiding) {
-							_calc.mouseLeft = e.pageX + _calc.left;
-							_wrapper.css({ 'left': parseInt(_calc.mouseLeft + _calc.delta) + 'px', 'top': parseInt(e.pageY - (_wrapper.height() / 2)) + 'px' });
-						}
-						animation = { 'opacity': 1, 'left': _calc.left + 'px' };
-					}
-				}
-				_isHiding = false;
-				_wrapper.show();
-				_wrapper.animate(animation, _options.animationDuration, _options.animationEasing, function() {
-					_isActive = true;
-				});
-
-				return false;
-			}).mouseout(function() {
-				if (_timeoutAnimate) {
-					clearTimeout(_timeoutAnimate);
-				}
-				_timeoutAnimate = setTimeout(function() {
-					var animation;
-
-					_isActive = false;
-					_isHiding = true;
-					if (_options.positionAt.match(/^element|body$/i)) {
-						if (_options.deltaDirection.match(/^up|down$/i)) {
-							animation = { 'opacity': 0, 'top': parseInt(_calc.top - _calc.delta) + 'px' };
-						} else {
-							animation = { 'opacity': 0, 'left': parseInt(_calc.left - _calc.delta) + 'px' };
-						}
-					} else {
-						if (_options.deltaDirection.match(/^up|down$/i)) {
-							animation = { 'opacity': 0, 'top': parseInt(_calc.mouseTop - _calc.delta) + 'px' };
-						} else {
-							animation = { 'opacity': 0, 'left': parseInt(_calc.mouseLeft - _calc.delta) + 'px' };
-						}
-					}
-					_wrapper.animate(animation, _options.animationDuration, _options.animationEasing, function() {
-						_wrapper.hide();
-						_isHiding = false;
-					});
-
-				}, _options.mouseoutDelay);
-
-				return false;
-			});
 			return this;
 		}
 	});
