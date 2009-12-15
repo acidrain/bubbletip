@@ -53,6 +53,7 @@
     <Content Include="js\bubbletip\bubbletip.css" />
     <Content Include="js\bubbletip\bubbletip.png" />
     <Content Include="js\bubbletip\bubbletip-IE.css" />
+    <Content Include="js\jQuery.bubbletip-1.0.4.js" />
     <Content Include="js\jQuery.bubbletip-1.0.1.js" />
     <Content Include="js\jQuery.bubbletip-1.0.3.js" />
     <Content Include="js\jQuery.bubbletip-1.0.2.js" />
