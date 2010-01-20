@@ -35,6 +35,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Content Include="bubble.jpg" />
+    <Content Include="js\jQuery.bubbletip-1.0.5.js" />
+    <Content Include="test.htm" />
     <Content Include="index.htm" />
     <Content Include="js\bubbletip\bubbletip-B-tail.png" />
     <Content Include="js\bubbletip\bubbletip-B.png" />
