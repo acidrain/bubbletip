@@ -3,9 +3,9 @@
 <head>
     <title>BubbleTip Demo</title>
 	
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js" type="text/javascript"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.0/jquery.min.js" type="text/javascript"></script>
 	
-	<script src="js/jQuery.bubbletip-1.0.4.js" type="text/javascript"></script>
+	<script src="js/jQuery.bubbletip-1.0.5.js" type="text/javascript"></script>
 	<link href="js/bubbletip/bubbletip.css" rel="stylesheet" type="text/css" />
 	<!--[if IE]>
 	<link href="js/bubbletip/bubbletip-IE.css" rel="stylesheet" type="text/css" />
@@ -51,13 +51,21 @@
 			});
 			$('#a1_right').bubbletip($('#tip1_right'), { deltaDirection: 'right' });
 			$('#a1_trigger').bubbletip($('#tip1_trigger1'), { positionAtElement: $('#a1_target') });
-			$('#a1_trigger').bubbletip($('#tip1_trigger2'), {
-				positionAtElement: $('#a1_target'),
-				deltaDirection: 'down',
-				delayShow: 500,
-				delayHide: 1000				
-			}).bind('click', function() {
-				$(this).removeBubbletip($('#tip1_trigger2'));
+
+			$('#a_unbind').bubbletip($('#tip1_trigger2_unbind'));
+			$('#a_unbind').bind('click', function(event) {
+				$('#a1_trigger').removeBubbletip($('#tip1_trigger2'));
+				event.preventDefault();
+			});
+			$('#a_bind').bubbletip($('#tip1_trigger2_bind'));
+			$('#a_bind').bind('click', function(event) {
+				$('#a1_trigger').bubbletip($('#tip1_trigger2'), {
+					positionAtElement: $('#a1_target'),
+					deltaDirection: 'down',
+					delayShow: 500,
+					delayHide: 1000
+				});
+				event.preventDefault();
 			});
 
 			$('#inpText').bubbletip($('#tip1_focusblur'), {
@@ -65,7 +73,6 @@
 				bindShow: 'focus',
 				bindHide: 'blur'
 			});
-
 		});
 	</script>
 </head>
@@ -107,7 +114,7 @@
 	<a id="a1_left" href="#">to the left</a> or 
 	<a id="a1_right" href="#">to the right</a> of any element.</p>
 <p>MOUSEOVER a 
-	<a id="a1_trigger" href="#">trigger element</a> to open a tooltip above and below a 
+	<a id="a1_trigger" href="#">trigger element</a> [ <a href="#" id="a_bind">bind</a> / <a href="#" id="a_unbind">unbind</a> ] to open a tooltip above and below a 
 	<a id="a1_target" href="#">target element</a>.</p>
 <p>FOCUS & BLUR <input type="text" id="inpText" value="focus me!" /></p>
 
@@ -139,10 +146,25 @@
     positionAtElement: $('#a1_target')
     delayShow: 500,
     delayHide: 1000			
-}
-trigger.click » .removeBubbletip('#a1_target')</pre>
+}</pre>
 </div>
-<div id="tip1_focusblur" style="display:none;">
+<div id="tip1_trigger2_bind" style="display:none;">
+<pre class="tip">click to bind a second bubbletip 
+to the trigger element
+
+$('#a1_trigger').bubbletip($('#tip1_trigger2'), {
+    positionAtElement: $('#a1_target'),
+    deltaDirection: 'down',
+    delayShow: 500,
+    delayHide: 1000
+});</pre>
+</div>
+<div id="tip1_trigger2_unbind" style="display:none;">
+<pre class="tip">click to unbind the second bubbletip
+
+$('#a1_trigger').removeBubbletip($('#tip1_trigger2'));
+</pre>
+</div><div id="tip1_focusblur" style="display:none;">
 <pre class="tip">{
     deltaDirection: 'right',
     bindShow: 'focus',
@@ -180,9 +202,18 @@ trigger.click » .removeBubbletip('#a1_target')</pre>
 <li><strong>bindHide:</strong> mouseout(default) | blur | ... <em>» the bind event(s) to hide the tip</em></li>
 <li><strong>delayShow:</strong> 0 <em>» the time in ms to delay showing the tip</em></li>
 <li><strong>delayHide:</strong> 500 <em>» the time in ms to delay hiding the tip</em></li>
+<li><strong>calculateOnShow:</strong> false <em>» recalculate the position prior to showing</em></li>
 </ul>
 
 <h4>changes</h4>
+<p>v1.0.5 » 2010-01-20</p>
+<ul>
+<li>tested (lightly) with jQuery-1.4.0, IE6+, FF3.5, Chrome3.0</li>
+<li>fixed IE6, IE7 window.resize bug</li>
+<li>fixed $.fn.removeBubbletip()</li>
+<li>added options.calculateOnShow</li>
+</ul>
+
 <p>v1.0.4 » 2009-12-14</p>
 <ul>
 <li>added $.fn.removeBubbletip() to allow a tip and its bindings to be removed from the DOM</li>
