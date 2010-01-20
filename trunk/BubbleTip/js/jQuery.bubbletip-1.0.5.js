@@ -50,7 +50,7 @@
 				deltaPosition: 30,
 				deltaDirection: 'up', // direction: up | down | left | right
 				animationDuration: 250,
-				animationEasing: 'linear', // linear | swing
+				animationEasing: 'swing', // linear | swing
 				bindShow: 'mouseover', // mouseover | focus | click | etc.
 				bindHide: 'mouseout', // mouseout | blur | etc.
 				delayShow: 0,
