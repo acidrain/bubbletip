@@ -145,6 +145,8 @@
 			}
 			// set the opacity of the wrapper to 0
 			_wrapper.css('opacity', 0);
+			// hack for FF 3.6
+			_wrapper.css({ 'width': _wrapper.width(), 'height': _wrapper.height() });
 			// execute initial calculations
 			_Calculate();
 			_wrapper.hide();
@@ -163,101 +165,111 @@
 				if (_timeoutRefresh) {
 					clearTimeout(_timeoutRefresh);
 				}
-
 				_timeoutRefresh = setTimeout(function() {
 					_Calculate();
 				}, 250);
 			});
 
 			// handle mouseover and mouseout events
-			$([_wrapper.get(0), this.get(0)]).bind(_calc.bindShow, function(e) {
+			$([_wrapper.get(0), this.get(0)]).bind(_calc.bindShow, function() {
 				if (_timeoutAnimate) {
 					clearTimeout(_timeoutAnimate);
 				}
-				_timeoutAnimate = setTimeout(function() {
-					if (_isActive) {
-						return;
-					}
-					_isActive = true;
-					if (_isHiding) {
-						_wrapper.stop(true, false);
-					}
-
-					var animation;
-
-					if (_options.calculateOnShow) {
-						_Calculate();
-					}
-					if (_options.positionAt.match(/^element|body$/i)) {
-						if (_options.deltaDirection.match(/^up|down$/i)) {
-							if (!_isHiding) {
-								_wrapper.css('top', parseInt(_calc.top + _calc.delta) + 'px');
-							}
-							animation = { 'top': _calc.top + 'px' };
-						} else {
-							if (!_isHiding) {
-								_wrapper.css('left', parseInt(_calc.left + _calc.delta) + 'px');
-							}
-							animation = { 'left': _calc.left + 'px' };
-						}
-					} else {
-						if (_options.deltaDirection.match(/^up|down$/i)) {
-							if (!_isHiding) {
-								_calc.mouseTop = e.pageY + _calc.top;
-								_wrapper.css({ 'top': parseInt(_calc.mouseTop + _calc.delta) + 'px', 'left': parseInt(e.pageX - (_wrapper.width() / 2)) + 'px' });
-							}
-							animation = { 'top': _calc.mouseTop + 'px' };
-						} else {
-							if (!_isHiding) {
-								_calc.mouseLeft = e.pageX + _calc.left;
-								_wrapper.css({ 'left': parseInt(_calc.mouseLeft + _calc.delta) + 'px', 'top': parseInt(e.pageY - (_wrapper.height() / 2)) + 'px' });
-							}
-							animation = { 'left': _calc.left + 'px' };
-						}
-					}
-					_isHiding = false;
-					_wrapper.show();
-					animation = $.extend(animation, { 'opacity': 1 });
-					_wrapper.animate(animation, _options.animationDuration, _options.animationEasing, function() {
-						_wrapper.css('opacity', '');
-						_isActive = true;
-					});
-				}, _options.delayShow);
-
+				if (_options.delayShow === 0) {
+					_Show();
+				} else {
+					_timeoutAnimate = setTimeout(function() {
+						_Show();
+					}, _options.delayShow);
+				}
 				return false;
-			}).bind(_calc.bindHide, function(e) {
+			}).bind(_calc.bindHide, function() {
 				if (_timeoutAnimate) {
 					clearTimeout(_timeoutAnimate);
 				}
-				_timeoutAnimate = setTimeout(function() {
-					var animation;
-
-					_isActive = false;
-					_isHiding = true;
-					if (_options.positionAt.match(/^element|body$/i)) {
-						if (_options.deltaDirection.match(/^up|down$/i)) {
-							animation = { 'top': parseInt(_calc.top - _calc.delta) + 'px' };
-						} else {
-							animation = { 'left': parseInt(_calc.left - _calc.delta) + 'px' };
-						}
-					} else {
-						if (_options.deltaDirection.match(/^up|down$/i)) {
-							animation = { 'top': parseInt(_calc.mouseTop - _calc.delta) + 'px' };
-						} else {
-							animation = { 'left': parseInt(_calc.mouseLeft - _calc.delta) + 'px' };
-						}
-					}
-					animation = $.extend(animation, { 'opacity': 0 });
-					_wrapper.animate(animation, _options.animationDuration, _options.animationEasing, function() {
-						_wrapper.hide();
-						_isHiding = false;
-					});
-
-				}, _options.delayHide);
-
+				if (_options.delayHide === 0) {
+					_Hide();
+				} else {
+					_timeoutAnimate = setTimeout(function() {
+						_Hide();
+					}, _options.delayHide);
+				}
 				return false;
 			});
 
+			function _Show() {
+				var animation;
+
+				if (_isActive) { // the tip is currently showing; do nothing
+					return;
+				}
+				_isActive = true;
+				if (_isHiding) { // the tip is currently hiding; interrupt and start showing again
+					_wrapper.stop(true, false);
+				}
+
+				if (_options.calculateOnShow) {
+					_Calculate();
+				}
+				if (_options.positionAt.match(/^element|body$/i)) {
+					if (_options.deltaDirection.match(/^up|down$/i)) {
+						if (!_isHiding) {
+							_wrapper.css('top', parseInt(_calc.top + _calc.delta) + 'px');
+						}
+						animation = { 'top': _calc.top + 'px' };
+					} else {
+						if (!_isHiding) {
+							_wrapper.css('left', parseInt(_calc.left + _calc.delta) + 'px');
+						}
+						animation = { 'left': _calc.left + 'px' };
+					}
+				} else {
+					if (_options.deltaDirection.match(/^up|down$/i)) {
+						if (!_isHiding) {
+							_calc.mouseTop = e.pageY + _calc.top;
+							_wrapper.css({ 'top': parseInt(_calc.mouseTop + _calc.delta) + 'px', 'left': parseInt(e.pageX - (_wrapper.width() / 2)) + 'px' });
+						}
+						animation = { 'top': _calc.mouseTop + 'px' };
+					} else {
+						if (!_isHiding) {
+							_calc.mouseLeft = e.pageX + _calc.left;
+							_wrapper.css({ 'left': parseInt(_calc.mouseLeft + _calc.delta) + 'px', 'top': parseInt(e.pageY - (_wrapper.height() / 2)) + 'px' });
+						}
+						animation = { 'left': _calc.left + 'px' };
+					}
+				}
+				_isHiding = false;
+				_wrapper.show();
+				animation = $.extend(animation, { 'opacity': 1 });
+				_wrapper.animate(animation, _options.animationDuration, _options.animationEasing, function() {
+					_wrapper.css('opacity', '');
+					_isActive = true;
+				});
+			};
+			function _Hide() {
+				var animation;
+
+				_isActive = false;
+				_isHiding = true;
+				if (_options.positionAt.match(/^element|body$/i)) {
+					if (_options.deltaDirection.match(/^up|down$/i)) {
+						animation = { 'top': parseInt(_calc.top - _calc.delta) + 'px' };
+					} else {
+						animation = { 'left': parseInt(_calc.left - _calc.delta) + 'px' };
+					}
+				} else {
+					if (_options.deltaDirection.match(/^up|down$/i)) {
+						animation = { 'top': parseInt(_calc.mouseTop - _calc.delta) + 'px' };
+					} else {
+						animation = { 'left': parseInt(_calc.mouseLeft - _calc.delta) + 'px' };
+					}
+				}
+				animation = $.extend(animation, { 'opacity': 0 });
+				_wrapper.animate(animation, _options.animationDuration, _options.animationEasing, function() {
+					_wrapper.hide();
+					_isHiding = false;
+				});
+			};
 			function _Calculate() {
 				// calculate values
 				if (_options.positionAt.match(/^element$/i)) {
