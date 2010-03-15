@@ -1,28 +1,15 @@
 /*
 * bubbletip
 *
-* Copyright (c) 2009, UhLeeKa
+* Copyright (c) 2009-2010, UhLeeKa.
 * Version: 
 *      1.0.6
-* Licensed under the GPL license:
-*     http://www.gnu.org/licenses/gpl.html
+* Licensed under the GNU Lesser General Public License:
+*     http://www.gnu.org/licenses/lgpl-3.0.html
 * Author Website: 
 *     http://www.uhleeka.com
-* Description: 
-*     A bubble-styled tooltip extension
-*      - multiple tips on a page
-*      - multiple tips per jQuery element 
-*      - tips open outward in four directions:
-*         - up
-*         - down
-*         - left
-*         - right
-*      - tips can be: 
-*         - anchored to the triggering jQuery element
-*         - absolutely positioned
-*         - opened at the current mouse coordinates
-*         - anchored to a specified jQuery element
-*      - IE png transparency is handled via filters
+* Project Hosting on Google Code: 
+*     http://code.google.com/p/bubbletip/
 */
 ; (function($) {
 	var bindIndex = 0;
