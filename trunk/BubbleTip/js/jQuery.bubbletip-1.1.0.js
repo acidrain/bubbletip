@@ -18,7 +18,7 @@
 			// check to see if the tip is a descendant of 
 			// a table.bubbletip element and therefore
 			// has already been instantiated as a bubbletip
-			if ($('table.bubbletip #' + $(tip).get(0).id).length > 0) {
+			if (($(tip).length == 0) || ($(tip).eq(0).closest('table.bubbletip').length > 0)) {
 				return this;
 			}
 
@@ -27,7 +27,7 @@
 			var _windowWidth, _windowHeight;
 
 			_this = $(this);
-			_tip = $(tip);
+			_tip = $(tip).eq(0);
 			_bindIndex = bindIndex++;  // for window.resize namespace binding
 			_options = {
 				positionAt: 'element', // element | body | mouse
@@ -65,9 +65,9 @@
 
 			// store the tip id for removeBubbletip
 			if (!_this.data('bubbletip_tips')) {
-				_this.data('bubbletip_tips', [[_tip.get(0).id, _bindIndex]]);
+				_this.data('bubbletip_tips', [[_tip.get(0), _bindIndex]]);
 			} else {
-				_this.data('bubbletip_tips', $.merge(_this.data('bubbletip_tips'), [[_tip.get(0).id, _bindIndex]]));
+				_this.data('bubbletip_tips', $.merge(_this.data('bubbletip_tips'), [[_tip.get(0), _bindIndex]]));
 			}
 
 
@@ -336,7 +336,7 @@
 			// convert the parameter array of tip id's or elements to id's
 			arr = $.makeArray(tips);
 			for (i = 0; i < arr.length; i++) {
-				tipsToRemove.push($(arr[i]).get(0).id);
+				tipsToRemove.push($(arr[i]).get(0));
 			}
 
 			for (i = 0; i < tipsActive.length; i++) {
@@ -346,12 +346,9 @@
 					// otherwise, remove only specified tips
 
 					// find the surrounding table.bubbletip
-					elem = $('#' + tipsActive[i][0]).get(0).parentNode;
-					while (elem.tagName.toLowerCase() != 'table') {
-						elem = elem.parentNode;
-					}
+					elem = $(tipsActive[i][0]).closest('table.bubbletip');
 					// attach the tip element to body and hide
-					$('#' + tipsActive[i][0]).appendTo('body').hide();
+					$(tipsActive[i][0]).appendTo('body').hide();
 					// remove the surrounding table.bubbletip
 					$(elem).remove();
 
