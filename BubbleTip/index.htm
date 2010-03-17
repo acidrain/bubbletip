@@ -58,7 +58,7 @@
 				$('#a1_trigger').removeBubbletip($('#tip1_trigger2'));
 				event.preventDefault();
 			});
-			$('#a_bind').bubbletip($('.tip1_trigger2_bind'));
+			$('#a_bind').bubbletip($('#tip1_trigger2_bind'));
 			$('#a_bind').bind('click', function(event) {
 				$('#a1_trigger').bubbletip($('#tip1_trigger2'), {
 					positionAtElement: $('#a1_target'),
@@ -74,6 +74,10 @@
 				bindShow: 'focus',
 				bindHide: 'blur'
 			});
+			$('#a2_trigger').bubbletip($('#tip2_multi'), { positionAtElement: $('#a2_target') });
+			$('.a2').bind('mouseover', function() { $('#a2_trigger').trigger('mouseover'); });
+			$('.a2').bind('mouseout', function() { $('#a2_trigger').trigger('mouseout'); });
+			
 		});
 	</script>
 </head>
@@ -117,7 +121,10 @@
 <p>MOUSEOVER a 
 	<a id="a1_trigger" href="#">trigger element</a> [ <a href="#" id="a_bind">bind</a> / <a href="#" id="a_unbind">unbind</a> ] to open a tooltip above and below a 
 	<a id="a1_target" href="#">target element</a>.</p>
+<p>MOUSEOVER any <a href="#" id="a2_trigger">trigger</a>, <a href="#" class="a2">trigger</a>, <a href="#" class="a2">trigger</a>, <a href="#" class="a2">trigger</a>
+	to open a tip on a <a href="#" id="a2_target">target</a>.</p>
 <p>FOCUS & BLUR <input type="text" id="inpText" value="focus me!" /></p>
+
 
 <div id="tip1_up" style="display:none;"><pre class="tip">{ deltaDirection: 'up' }</pre></div>
 <div id="tip1_down" style="display:none;">
@@ -149,7 +156,7 @@
     delayHide: 1000			
 }</pre>
 </div>
-<div class="tip1_trigger2_bind" style="display:none;">
+<div id="tip1_trigger2_bind" style="display:none;">
 <pre class="tip">click to bind a second bubbletip 
 to the trigger element
 
@@ -165,14 +172,20 @@ $('#a1_trigger').bubbletip($('#tip1_trigger2'), {
 
 $('#a1_trigger').removeBubbletip($('#tip1_trigger2'));
 </pre>
-</div><div id="tip1_focusblur" style="display:none;">
+</div>
+<div id="tip1_focusblur" style="display:none;">
 <pre class="tip">{
     deltaDirection: 'right',
     bindShow: 'focus',
     bindHide: 'blur'
 }</pre>	
 </div>
-
+<div id="tip2_multi" style="display:none;">
+<pre class="tip">bubbletip
+bubbletip
+bubbletip
+bubbletip</pre>	
+</div>
 <h4>usage</h4>
 <p>the "trigger" element is the element upon which the bubbletip is instantiated:</p>
 <pre class="code">&lt;a id=&quot;a1_up&quot; href=&quot;#&quot;&gt;above&lt;/a&gt;</pre>
