@@ -55,8 +55,8 @@
 				mouseTop: 0,
 				mouseLeft: 0,
 				tipHeight: 0,
-				bindShow: (_options.bindShow + ' ').replace(/ +/g, '.bubbletip' + _bindIndex),
-				bindHide: (_options.bindHide + ' ').replace(/ +/g, '.bubbletip' + _bindIndex)
+				bindShow: (_options.bindShow + ' ').replace(/ +/g, '.bubbletip' + _bindIndex + ' '),
+				bindHide: (_options.bindHide + ' ').replace(/ +/g, '.bubbletip' + _bindIndex + ' ')
 			};
 			_timeoutAnimate = null;
 			_timeoutRefresh = null;

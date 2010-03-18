@@ -70,14 +70,30 @@
 			});
 
 			$('#inpText').bubbletip($('#tip1_focusblur'), {
+				positionAtElement: $('#inpTarget'),
 				deltaDirection: 'right',
-				bindShow: 'focus',
-				bindHide: 'blur'
+				bindShow: 'xShow', // set a custom show event
+				bindHide: 'xHide' // set a custom hide event
+			}).bind('focus', function() {
+				$(this).data('focus', true).trigger('xShow');  // store the focus state and trigger the show event
+			}).bind('blur', function() {
+				$(this).data('focus', false).trigger('xHide'); // store the focus state and trigger the hide event
 			});
+			$('#inpTarget').bind('mouseover', function() {
+				if (!$('#inpText').data('focus')) { // check to see if the input has focus
+					$('#inpText').trigger('xShow'); // it does not, so trigger the show event
+				}
+			}).bind('mouseout', function() {
+				if (!$('#inpText').data('focus')) { // check to see if the input has focus
+					$('#inpText').trigger('xHide'); // it does not, so trigger the hide event
+				}
+			});
+
+
 			$('#a2_trigger').bubbletip($('#tip2_multi'), { positionAtElement: $('#a2_target') });
 			$('.a2').bind('mouseover', function() { $('#a2_trigger').trigger('mouseover'); });
 			$('.a2').bind('mouseout', function() { $('#a2_trigger').trigger('mouseout'); });
-			
+
 		});
 	</script>
 </head>
@@ -123,7 +139,7 @@
 	<a id="a1_target" href="#">target element</a>.</p>
 <p>MOUSEOVER any <a href="#" id="a2_trigger">trigger</a>, <a href="#" class="a2">trigger</a>, <a href="#" class="a2">trigger</a>, <a href="#" class="a2">trigger</a>
 	to open a tip on a <a href="#" id="a2_target">target</a>.</p>
-<p>FOCUS & BLUR <input type="text" id="inpText" value="focus me!" /></p>
+<p>FOCUS & BLUR <input type="text" id="inpText" value="focus me!" /> <a href="#" id="inpTarget">[?]</a></p>
 
 
 <div id="tip1_up" style="display:none;"><pre class="tip">{ deltaDirection: 'up' }</pre></div>

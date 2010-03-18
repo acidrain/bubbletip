@@ -1,0 +1,96 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+    <title>BubbleTip Demo</title>
+	
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js" type="text/javascript"></script>
+	
+	<script src="js/jQuery.bubbletip-1.0.6.js" type="text/javascript"></script>
+	<link href="js/bubbletip/bubbletip.css" rel="stylesheet" type="text/css" />
+	<!--[if IE]>
+	<link href="js/bubbletip/bubbletip-IE.css" rel="stylesheet" type="text/css" />
+	<![endif]-->
+	
+	<style type="text/css">
+		p, h4, li
+		{
+			font-family: Arial, Tahoma, Verdana;
+		}
+		pre.tip
+		{
+			margin: 0px;
+			padding: 5px;
+			font-size: 0.9em;	
+		}
+		pre.code
+		{
+			margin: 0px;
+			padding: 20px;
+			border: solid 1px #CCC;
+			font-size: 1.0em;
+		}
+		em 
+		{
+			font-size: 0.9em;
+			color: #777777;
+		}
+	</style>
+	
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$('#inpText').bubbletip($('#tip1_focusblur'), {
+				positionAtElement: $('#inpTarget'),
+				deltaDirection: 'right',
+				bindShow: 'xShow', // set a custom show event
+				bindHide: 'xHide' // set a custom hide event
+			}).bind('focus', function() {
+				$(this).data('focus', true).trigger('xShow');  // store the focus state and trigger the show event
+			}).bind('blur', function() {
+				$(this).data('focus', false).trigger('xHide'); // store the focus state and trigger the hide event
+			});
+			$('#inpTarget').bind('mouseover', function() {
+				if (!$('#inpText').data('focus')) { // check to see if the input has focus
+					$('#inpText').trigger('xShow'); // it does not, so trigger the show event
+				}
+			}).bind('mouseout', function() {
+				if (!$('#inpText').data('focus')) { // check to see if the input has focus
+					$('#inpText').trigger('xHide'); // it does not, so trigger the hide event
+				}
+			});
+
+			$('#a2_trigger').bubbletip($('#tip2_multi'), { positionAtElement: $('#a2_target') });
+			$('.a2').bind('mouseover', function() { $('#a2_trigger').trigger('mouseover'); });
+			$('.a2').bind('mouseout', function() { $('#a2_trigger').trigger('mouseout'); });
+		});
+	</script>
+</head>
+<body>
+	<div id="bubbletipanchor"></div>
+	<h4>bubbletip</h4>
+	<p>A jQuery plugin to create a bubble-stylized tooltip popup</p>
+	
+	<h4>download</h4>
+	<p><a href="http://code.google.com/p/bubbletip/">http://code.google.com/p/bubbletip/</a></p>
+	
+<h4>examples</h4>
+<p>MOUSEOVER any <a href="#" id="a2_trigger">trigger</a>, <a href="#" class="a2">trigger</a>, <a href="#" class="a2">trigger</a>, <a href="#" class="a2">trigger</a>
+	to open a tip on a <a href="#" id="a2_target">target</a>.</p>
+<p>FOCUS & BLUR <input type="text" id="inpText" value="focus me!" /> <a href="#" id="inpTarget">[?]</a></p>
+
+
+<div id="tip1_focusblur" style="display:none;">
+<pre class="tip">{
+    deltaDirection: 'right',
+    bindShow: 'focus',
+    bindHide: 'blur'
+}</pre>	
+</div>
+<div id="tip2_multi" style="display:none;">
+<pre class="tip">bubbletip
+bubbletip
+bubbletip
+bubbletip</pre>	
+</div>
+
+</body>
+</html>
