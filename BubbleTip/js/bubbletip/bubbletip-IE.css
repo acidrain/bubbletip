@@ -19,18 +19,20 @@
 .bubbletip td.bt-left-tail div.bt-left, .bubbletip td.bt-left
 {
 	background: transparent url(bubbletip-L.png) repeat-y scroll 0px 0px;
+	overflow: hidden;
 }
 .bubbletip td.bt-left-tail div.bt-left-tail
 {
-	background: transparent url(bubbletip-L-tail.png) no-repeat scroll 0px 0px;
+	background: transparent url(bubbletip-L-tail.png) no-repeat scroll center center;
 }
 .bubbletip td.bt-right-tail div.bt-right, .bubbletip td.bt-right
 {
 	background: transparent url(bubbletip-R.png) repeat-y scroll 0px 0px;
+	overflow: hidden;
 }
 .bubbletip td.bt-right-tail div.bt-right-tail
 {
-	background: transparent url(bubbletip-R-tail.png) no-repeat scroll 0px 0px;
+	background: transparent url(bubbletip-R-tail.png) no-repeat scroll center center;
 }
 .bubbletip td.bt-bottomleft
 {
