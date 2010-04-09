@@ -90,7 +90,7 @@
 			});
 
 
-			$('#a2_trigger').bubbletip($('#tip2_multi'), { positionAtElement: $('#a2_target') });
+			$('#a2_trigger').bubbletip($('#tip2_multi'), { deltaDirection: 'left', calculateOnShow: true, positionAtElement: $('#a2_target') });
 			$('.a2').bind('mouseover', function() { $('#a2_trigger').trigger('mouseover'); });
 			$('.a2').bind('mouseout', function() { $('#a2_trigger').trigger('mouseout'); });
 
@@ -99,6 +99,7 @@
 </head>
 <body>
 	<div id="bubbletipanchor"></div>
+	<div id="debug" style="position:fixed;top:10px;right:10px;border:solid 1px #000;width:300px;height:300px;overflow:auto;background-color:#fff;"></div>
 	<h4>bubbletip</h4>
 	<p>A jQuery plugin to create a bubble-stylized tooltip popup</p>
 	
@@ -197,10 +198,7 @@ $('#a1_trigger').removeBubbletip($('#tip1_trigger2'));
 }</pre>	
 </div>
 <div id="tip2_multi" style="display:none;">
-<pre class="tip">bubbletip
 bubbletip
-bubbletip
-bubbletip</pre>	
 </div>
 <h4>usage</h4>
 <p>the "trigger" element is the element upon which the bubbletip is instantiated:</p>
