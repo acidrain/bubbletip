@@ -37,7 +37,7 @@
 	</style>
 	
 	<script type="text/javascript">
-		$(document).ready(function() {
+		$(window).bind('load', function() {
 			$('#a1_up').bubbletip($('#tip1_up'));
 
 			$('#a1_down').bubbletip($('#tip1_down'), {
@@ -207,7 +207,7 @@ bubbletip
 <pre class="code">&lt;div id=&quot;tip1_up&quot; style=&quot;display:none;&quot;&gt;&lt;pre class=&quot;tip&quot;&gt;{ deltaDirection: 'up' }&lt;/pre&gt;&lt;/div&gt;</pre>
 <p>the javascript to create the bubbletip:</p>
 <pre class="code">&lt;script type=&quot;text/javascript&quot;&gt;
-    $(document).ready(function() {
+    $(window).bind('load', function() {
         $('#a1_up').bubbletip($('#tip1_up'));
     });
 &lt;/script&gt;</pre>
