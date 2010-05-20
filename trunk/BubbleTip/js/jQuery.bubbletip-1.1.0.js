@@ -157,8 +157,11 @@
 				}, 250);
 			});
 
-			// handle mouseover and mouseout events
-			$([_wrapper.get(0), this.get(0)]).bind(_calc.bindShow, function() {
+			// handle bind events
+			_wrapper.bind('mouseover', _ShowBind).bind(_calc.bindHide, _HideBind);
+			_this.bind(_calc.bindShow, _ShowBind).bind(_calc.bindHide, _HideBind);
+
+			function _ShowBind() {
 				if (_timeoutAnimate) {
 					clearTimeout(_timeoutAnimate);
 				}
@@ -170,20 +173,7 @@
 					}, _options.delayShow);
 				}
 				return false;
-			}).bind(_calc.bindHide, function() {
-				if (_timeoutAnimate) {
-					clearTimeout(_timeoutAnimate);
-				}
-				if (_options.delayHide === 0) {
-					_Hide();
-				} else {
-					_timeoutAnimate = setTimeout(function() {
-						_Hide();
-					}, _options.delayHide);
-				}
-				return false;
-			});
-
+			};
 			function _Show() {
 				var animation;
 
@@ -232,6 +222,19 @@
 					_wrapper.css('opacity', '');
 					_isActive = true;
 				});
+			};
+			function _HideBind() {
+				if (_timeoutAnimate) {
+					clearTimeout(_timeoutAnimate);
+				}
+				if (_options.delayHide === 0) {
+					_Hide();
+				} else {
+					_timeoutAnimate = setTimeout(function() {
+						_Hide();
+					}, _options.delayHide);
+				}
+				return false;
 			};
 			function _Hide() {
 				var animation;
